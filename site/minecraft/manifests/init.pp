@@ -17,5 +17,10 @@ file {'/opt/mycraft':
       ensure => file,
       source => 'puppet:///modules/minecraft/minecraft.service',
     }
+    
+   service { 'minecraft':
+    ensure => running,
+    enable => true,
+    }
  }
     
