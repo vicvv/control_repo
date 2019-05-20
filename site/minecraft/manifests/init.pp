@@ -1,16 +1,21 @@
-class minecraft {
-file {'/opt/mycraft':
+class minecraft (
+  $url = 'https://launcher.mojang.com/v1/objects/886945bfb2b978778c3a0288fd7fab09d315b25f/server.jar',
+  $install_dir = '/opt/minecraft'
+)
+
+{
+file {$install_dir:
   ensure => directory,
  }
- file { 'opt/minecraft/minecraft_server.jar':
+ file { "${install_dir}/minecraft_server.jar":
     ensure => file,
-    source => 'https://launcher.mojang.com/v1/objects/886945bfb2b978778c3a0288fd7fab09d315b25f/server.jar',
+    source => $url,
     before => Service['minecraft'],
    }
   package {'java':
     ensure => present,
     }
-  file {'/opt/minecraft/eula.txt':
+  file {"${install_dir}/eula.txt":
     ensure => file,
     content => 'eula=true'
     }
@@ -22,7 +27,7 @@ file {'/opt/mycraft':
    service { 'minecraft':
     ensure => running,
     enable => true,
-    require => [Package['java', File['opt/minecraft/minecraft_server.jar'], File['/opt/minecraft/eula.txt']],
+    require => [Package['java', File["${install_dir}/minecraft_server.jar"], File["${install_dir}/eula.txt"]],
     }
  }
     
