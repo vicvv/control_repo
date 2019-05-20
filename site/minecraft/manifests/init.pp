@@ -4,14 +4,14 @@ class minecraft (
 )
 
 {
-file {$install_dir:
-  ensure => directory,
- }
- file { "${install_dir}/minecraft_server.jar":
+  file { $install_dir:
+    ensure => directory,
+  }
+  file { "${install_dir}/minecraft_server.jar":
     ensure => file,
     source => $url,
-    before => Service['minecraft'],
-   }
+  }
+  
   package {'java':
     ensure => present,
     }
