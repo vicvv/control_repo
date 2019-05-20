@@ -29,7 +29,7 @@ file {$install_dir:
    service { 'minecraft':
     ensure => running,
     enable => true,
-    require => [Package['java', File["${install_dir}/minecraft_server.jar"], File["${install_dir}/eula.txt"]],
+    require => [Package['java'], File["${install_dir}/minecraft_server.jar"], File["${install_dir}/eula.txt"]],
     }
  }
     
